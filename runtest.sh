@@ -113,7 +113,9 @@ chkfil()
 	fi
 	if [ ! -f $GOLD/$1.$2 ]
 	then
-		echo "      NO GOLDEN FILE $GOLD/$1.$2, RUN runtest.sh -g" >&2
+		echo "NO GOLDEN FILE $GOLD/$1.$2, RUN runtest.sh -g" \
+			> $WORK/$1/$2.diff
+		cat $WORK/$1/$2.diff >&2
 		return 1
 	fi
 	diff $GOLD/$1.$2 $3 > $WORK/$1/$2.diff 2>&1
