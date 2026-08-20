@@ -26,6 +26,7 @@
 #define MAXFLT  4000            /* FLIGHT REPORTS HELD IN CORE        */
 #define MAXSLT  60              /* WORKSHOP INDUCTION SLOTS           */
 #define MAXPLN  120             /* LINES IN THE INDUCTION PLAN        */
+#define MAXSPR  150             /* STOCKED PART NUMBERS IN THE STORE  */
 
 #define ESNSIZ  8               /* ENGINE SERIAL NUMBER, 8 CHARS      */
 #define TYPSIZ  6
@@ -33,6 +34,8 @@
 #define OPRSIZ  4
 #define DATSIZ  6               /* DATES ARE YYMMDD, SIX DIGITS       */
 #define SHPSIZ  4
+#define PRTSIZ  10              /* PART NUMBER, 10 CHARS              */
+#define DSCSIZ  24              /* PART DESCRIPTION, 24 CHARS         */
 #define RECSIZ  132             /* ONE CARD IMAGE / ONE PRINT LINE    */
 
 /* ------ ENGINE SERVICEABILITY CODES ------------------------------- */
@@ -139,6 +142,11 @@ struct plnrec {
 	int     wscope;                 /* SEE WORKSCOPE CODES BELOW    */
 	int     tat;                    /* TURN ROUND TIME, DAYS        */
 	int     placed;                 /* 0 = COULD NOT BE PLACED      */
+
+	int     pvsts;                  /* SET BY SPPROV, SEE BELOW     */
+	int     pvreq;                  /* PART NUMBERS CALLED FOR      */
+	int     pvshr;                  /* OF WHICH SHORT ON THE SHELF  */
+	int     pvlead;                 /* WORST LEAD TIME, DAYS        */
 };
 
 /* ------ WORKSCOPE CODES ------------------------------------------- */
@@ -149,18 +157,56 @@ struct plnrec {
 #define WSPERF  3               /* PERFORMANCE RESTORATION            */
 #define WSFULL  4               /* FULL OVERHAUL, LLP REPLACEMENT     */
 
+/*
+ *  STOCKED PART RECORD.  ONE PER PART NUMBER, ENGINE MARK AND WORK
+ *  SCOPE.  THE FIRST EIGHT FIELDS ARE READ FROM THE SPARES FILE, THE
+ *  REMAINDER ARE THE WORKING STOCK POSITION KEPT BY SPPROV() AND ARE
+ *  NOT WRITTEN BACK TO DISC.
+ */
+
+struct sprrec {
+	char    pnum[PRTSIZ+1];         /* PART NUMBER, KEY             */
+	char    pdesc[DSCSIZ+1];        /* PART DESCRIPTION             */
+	char    etype[TYPSIZ+1];        /* ENGINE MARK THE PART FITS    */
+	int     wscope;                 /* WORKSCOPE THAT CONSUMES IT   */
+	int     qoh;                    /* QUANTITY ON HAND             */
+	int     qoo;                    /* QUANTITY ON ORDER            */
+	int     lead;                   /* LEAD TIME, DAYS              */
+	char    rotbl;                  /* R ROTABLE, C CONSUMABLE      */
+
+	int     avail;                  /* WORKING STOCK ON THE SHELF   */
+	int     onord;                  /* WORKING STOCK ON ORDER       */
+	int     dmand;                  /* UNITS CALLED FOR BY THE PLAN */
+	int     shrt;                   /* UNITS THE PLAN CANNOT COVER  */
+};
+
+/* ------ ROTABLE POOL INDICATOR ------------------------------------ */
+
+#define SPROT   'R'             /* ROTABLE, RETURNS TO THE POOL       */
+#define SPCON   'C'             /* CONSUMABLE, SCRAPPED ON FITTING    */
+
+/* ------ PROVISIONING STATUS OF ONE PLAN LINE ---------------------- */
+
+#define PVNONE  0               /* NO PART NUMBERS HELD               */
+#define PVFULL  1               /* EVERY PART ON THE SHELF            */
+#define PVLEAD  2               /* SHORT, LEAD TIME RECOVERS IT       */
+#define PVLATE  3               /* SHORT BEYOND THE INDUCTION WEEK    */
+
 /* ------ GLOBAL TABLES.  DEFINED IN DBIO.C. ------------------------ */
 
 extern struct engrec engtab[MAXENG];
 extern struct fltrec flttab[MAXFLT];
 extern struct sltrec slttab[MAXSLT];
 extern struct plnrec plntab[MAXPLN];
+extern struct sprrec sprtab[MAXSPR];
 
 extern int nengs;               /* ENGINES LOADED                     */
 extern int nflts;               /* FLIGHT REPORTS LOADED              */
 extern int nslts;               /* SLOTS LOADED                       */
 extern int nplns;               /* PLAN LINES BUILT                   */
+extern int nsprs;               /* STOCKED PARTS LOADED               */
 extern int calcdn;              /* NON ZERO ONCE EHMCALC HAS RUN      */
+extern int provdn;              /* NON ZERO ONCE SPPROV HAS RUN       */
 extern char runday[DATSIZ+1];   /* RUN DATE, YYMMDD, SET BY MAIN      */
 
 /* ------ ENTRY POINTS.  NO PROTOTYPES - K AND R COMPILERS ONLY. ---- */
@@ -168,12 +214,17 @@ extern char runday[DATSIZ+1];   /* RUN DATE, YYMMDD, SET BY MAIN      */
 extern int ldfleet();           /* DBIO.C                             */
 extern int ldflts();
 extern int ldslot();
+extern int ldspar();
 extern int fndeng();
 extern int ehmcalc();           /* EHMCALC.C                          */
 extern int wrkscd();            /* WRKSCD.C                           */
+extern char *wstext();
+extern int wscode();
+extern int spprov();            /* SPRPRV.C                           */
 extern int rptflt();            /* RPTGEN.C                           */
 extern int rptalr();
 extern int rptpln();
+extern int rptspr();
 extern int rpteng();
 extern char *strim();           /* STRUTL.C                           */
 extern char *upcase();

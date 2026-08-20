@@ -13,6 +13,7 @@
  *  R.T.H.  02-APR-1988
  *  MOD 1   17-JUN-1991  A.M.S.  FLIGHT REPORTS CHAINED TO THE ENGINE.
  *  MOD 2   03-DEC-1993  A.M.S.  DATA SET DIRECTORY TAKEN FROM EHMDATA.
+ *  MOD 3   14-JUN-1996  D.O'N.  SPARES AND ROTABLE POOL FILE LOADED.
  *----------------------------------------------------------------------
  */
 
@@ -26,12 +27,15 @@ struct engrec engtab[MAXENG];
 struct fltrec flttab[MAXFLT];
 struct sltrec slttab[MAXSLT];
 struct plnrec plntab[MAXPLN];
+struct sprrec sprtab[MAXSPR];
 
 int nengs = 0;
 int nflts = 0;
 int nslts = 0;
 int nplns = 0;
+int nsprs = 0;
 int calcdn = 0;
+int provdn = 0;
 char runday[DATSIZ+1] = "960209";
 
 extern int fldint();
@@ -330,4 +334,89 @@ char *fname;
 	sprintf(work, "EHM-103 SLOT FILE LOADED, %d SLOTS", nslts);
 	logmsg(work);
 	return (nslts);
+}
+
+/*
+ *  LDSPAR  -  LOAD THE SPARES AND ROTABLE POOL FILE.  ONE CARD PER
+ *             STOCKED PART NUMBER PER ENGINE MARK AND WORKSCOPE.  A
+ *             CARD WITH A BLANK PART NUMBER, A BLANK ENGINE MARK OR AN
+ *             UNRECOGNISED WORKSCOPE MNEMONIC IS REJECTED AND COUNTED.
+ *             RETURNS THE NUMBER OF PARTS LOADED, OR -1 IF THE DATA SET
+ *             COULD NOT BE OPENED.
+ */
+
+int ldspar(fname)
+char *fname;
+{
+	FILE *fp;
+	struct sprrec *s;
+	char wsm[8];
+	char rot[4];
+	int nbad;
+
+	nsprs = 0;
+	nbad = 0;
+	provdn = 0;
+	fp = fopen(dsname(fname == NULL ? DSSPRS : fname), "r");
+	if (fp == NULL) {
+		sprintf(work, "EHM-924 CANNOT OPEN SPARES FILE %s", path);
+		errmsg(work);
+		return (-1);
+	}
+
+	while (getcrd(fp)) {
+		if (nsprs >= MAXSPR) {
+			sprintf(work,
+			 "EHM-925 SPARES FILE TRUNCATED AT %d PARTS", MAXSPR);
+			errmsg(work);
+			break;
+		}
+		s = &sprtab[nsprs];
+		fldcpy(s->pnum,  card, SP_PNO, PRTSIZ);
+		fldcpy(s->pdesc, card, SP_DSC, DSCSIZ);
+		fldcpy(s->etype, card, SP_TYP, TYPSIZ);
+		fldcpy(wsm,      card, SP_WSC, 4);
+		s->qoh  = fldint(card, SP_QOH, 4);
+		s->qoo  = fldint(card, SP_QOO, 4);
+		s->lead = fldint(card, SP_LED, 3);
+		fldcpy(rot,      card, SP_ROT, 1);
+
+		upcase(s->pnum);
+		upcase(s->pdesc);
+		upcase(s->etype);
+		upcase(wsm);
+		upcase(rot);
+		s->wscope = wscode(wsm);
+		s->rotbl = rot[0];
+
+		if (s->pnum[0] == '\0' || s->etype[0] == '\0' ||
+		    s->wscope == WSNONE || s->qoh < 0 || s->qoo < 0) {
+			sprintf(work, "EHM-926 SPARES CARD REJECTED - %s",
+				card);
+			errmsg(work);
+			nbad++;
+			continue;
+		}
+		if (s->rotbl != SPROT && s->rotbl != SPCON) {
+			sprintf(work,
+			 "EHM-927 PART %s BAD POOL CODE, TAKEN AS %c",
+			 s->pnum, SPCON);
+			errmsg(work);
+			s->rotbl = SPCON;
+		}
+		if (s->lead < 0)
+			s->lead = 0;
+
+		s->avail = s->qoh;
+		s->onord = s->qoo;
+		s->dmand = 0;
+		s->shrt  = 0;
+		nsprs++;
+	}
+	fclose(fp);
+
+	sprintf(work, "EHM-109 SPARES FILE LOADED, %d PARTS, %d REJECTED",
+		nsprs, nbad);
+	logmsg(work);
+	return (nsprs);
 }

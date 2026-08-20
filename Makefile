@@ -25,6 +25,7 @@ OBJS    = src/ehmmain.o \
           src/dbio.o \
           src/ehmcalc.o \
           src/wrkscd.o \
+          src/sprprv.o \
           src/rptgen.o \
           src/strutl.o \
           src/errlog.o
@@ -40,6 +41,7 @@ src/ehmmain.o:  src/ehmmain.c  $(HDRS)
 src/dbio.o:     src/dbio.c     $(HDRS)
 src/ehmcalc.o:  src/ehmcalc.c  $(HDRS)
 src/wrkscd.o:   src/wrkscd.c   $(HDRS)
+src/sprprv.o:   src/sprprv.c   $(HDRS)
 src/rptgen.o:   src/rptgen.c   $(HDRS)
 src/strutl.o:   src/strutl.c   $(HDRS)
 src/errlog.o:   src/errlog.c   $(HDRS)
