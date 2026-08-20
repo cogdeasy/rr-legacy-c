@@ -350,7 +350,7 @@ FILE *fp;
 	fprintf(fp,
 "     PART NO     DESCRIPTION               TYPE   SCOPE  POOL  ON HAND  ON ORDER  LEAD  DEMAND  SHORT\n");
 	fprintf(fp, "\n");
-	linect += 4;
+	linect += 5;
 
 	nshrt = 0;
 	nunit = 0;
