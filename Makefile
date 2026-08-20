@@ -32,6 +32,11 @@ OBJS    = src/ehmmain.o \
 
 HDRS    = include/ehm.h include/dbio.h
 
+#  THE TARGETS BELOW ARE NAMES OF WORK, NOT NAMES OF FILES.  TEST IS
+#  ALSO THE NAME OF A DIRECTORY AND WOULD OTHERWISE BE HELD UP TO DATE.
+
+.PHONY: all run test lint clean
+
 all:    $(PROG)
 
 $(PROG): $(OBJS)

@@ -80,7 +80,12 @@ fi
 pass()
 {
 	NPASS=`expr $NPASS + 1`
-	echo "PASS  $1"
+	if [ $GENER -ne 0 ]
+	then
+		echo "GEN   $1"
+	else
+		echo "PASS  $1"
+	fi
 }
 
 fail()
