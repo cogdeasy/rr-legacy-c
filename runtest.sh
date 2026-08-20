@@ -209,7 +209,8 @@ statcase()
 
 	( cd $WRK || exit 2
 	  EHMDATA=
-	  export EHMDATA
+	  EHMHOME=
+	  export EHMDATA EHMHOME
 	  "$@" > ehm.out 2> ehm.err )
 	RC=$?
 
