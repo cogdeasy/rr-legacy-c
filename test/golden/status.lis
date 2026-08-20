@@ -1,0 +1,32 @@
+ENGINE HEALTH MONITORING SYSTEM 4.2C  FLEET STATUS SUMMARY                                 RUN 09-FEB-96 PAGE    1
+-----------------------------------------------------------------------------------------------------------------
+ESN      TYPE   REG     OPR  HRS SN  CYC SN BSTD ST  REPS   EGTM   RATE   VIB  CYC REM  SV DUE     ALERT REASON
+
+00091001 TR900  G-STSA  BAW    10000    2000    1  S     3     46      0    16   999999  01-JAN-98       ......
+00091002 TR900  G-STSB  BAW    10000    2000    1  W     3     46      0    16   999999  01-JAN-98       ......
+00091003 TR900  G-STSC  BAW    10000    2000    1  R     3     46      0    16   999999  01-JAN-98       ......
+00091004 TR900  G-STSD  BAW    10000    2000    1  U     3     46      0    16   999999  01-JAN-98  AOG  ......
+
+TOTAL ENGINES    4      ACT OR ABOVE    1      ON WATCH    0      FLIGHT REPORTS    12
+ENGINE HEALTH MONITORING SYSTEM 4.2C  ENGINE ALERT REPORT                                  RUN 09-FEB-96 PAGE    2
+-----------------------------------------------------------------------------------------------------------------
+LVL  ESN      TYPE   REG     OPR   EGTM   RATE    VIB   CYC REM  SV DUE     REASON  RECOMMENDED ACTION
+
+AOG  00091004 TR900  G-STSD  BAW      46      0     16    999999  01-JAN-98  ......  REMOVE AT NEXT OPPORTUNITY
+
+REASON CODES   M EGT MARGIN LOW   R DETERIORATION RATE   V VIBRATION   O OIL SYSTEM   L LIFE LIMIT   D SHOP VISIT DUE
+ENGINE HEALTH MONITORING SYSTEM 4.2C  WORKSHOP INDUCTION PLAN                              RUN 09-FEB-96 PAGE    3
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      SHOP  WEEK COMM  WORKSCOPE  TAT  STATUS
+
+  1    1  00091004 DBY1  12-FEB-96  INSP       21  PLANNED
+
+SLOT UTILISATION
+
+     SHOP DBY1 WEEK COMMENCING 12-FEB-96  BAYS  1 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 12-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY1 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP SIN1 WEEK COMMENCING 26-FEB-96  BAYS  0 OF  1 USED
+
+PLAN LINES   1      UNPLACED   0

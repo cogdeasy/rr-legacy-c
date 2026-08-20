@@ -5,6 +5,7 @@
 #  TARGETS
 #       ehm         THE PROGRAM
 #       run         RUN THE OVERNIGHT SEQUENCE AGAINST THE SAMPLE DATA
+#       test        RUN THE GOLDEN LISTING REGRESSION HARNESS
 #       lint        RUN LINT OVER THE SOURCES, IF IT IS INSTALLED
 #       clean       REMOVE THE OBJECT FILES AND THE PROGRAM
 #
@@ -51,8 +52,12 @@ run:    $(PROG)
 	EHMDATA=data ./$(PROG) -b -d 960209 -o ehm.lis
 	@echo "PRINT FILE WRITTEN TO ehm.lis"
 
+test:   $(PROG)
+	./runtest.sh
+
 lint:
 	lint -I include src/*.c
 
 clean:
 	rm -f $(OBJS) $(PROG) ehm.lis ehm.log
+	rm -rf test/work

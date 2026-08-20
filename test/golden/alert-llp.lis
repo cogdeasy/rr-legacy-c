@@ -1,0 +1,29 @@
+ENGINE HEALTH MONITORING SYSTEM 4.2C  FLEET STATUS SUMMARY                                 RUN 09-FEB-96 PAGE    1
+-----------------------------------------------------------------------------------------------------------------
+ESN      TYPE   REG     OPR  HRS SN  CYC SN BSTD ST  REPS   EGTM   RATE   VIB  CYC REM  SV DUE     ALERT REASON
+
+00092005 TR900  G-RSNL  BAW    30000   21000    1  S     3     45      0    20   999999  01-JUN-97  ACT  ....L.
+
+TOTAL ENGINES    1      ACT OR ABOVE    1      ON WATCH    0      FLIGHT REPORTS     3
+ENGINE HEALTH MONITORING SYSTEM 4.2C  ENGINE ALERT REPORT                                  RUN 09-FEB-96 PAGE    2
+-----------------------------------------------------------------------------------------------------------------
+LVL  ESN      TYPE   REG     OPR   EGTM   RATE    VIB   CYC REM  SV DUE     REASON  RECOMMENDED ACTION
+
+ACT  00092005 TR900  G-RSNL  BAW      45      0     20    999999  01-JUN-97  ....L.  REMOVE AT NEXT OPPORTUNITY
+
+REASON CODES   M EGT MARGIN LOW   R DETERIORATION RATE   V VIBRATION   O OIL SYSTEM   L LIFE LIMIT   D SHOP VISIT DUE
+ENGINE HEALTH MONITORING SYSTEM 4.2C  WORKSHOP INDUCTION PLAN                              RUN 09-FEB-96 PAGE    3
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      SHOP  WEEK COMM  WORKSCOPE  TAT  STATUS
+
+  1    2  00092005 DBY1  12-FEB-96  OVHL       90  PLANNED
+
+SLOT UTILISATION
+
+     SHOP DBY1 WEEK COMMENCING 12-FEB-96  BAYS  1 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 12-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY1 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP SIN1 WEEK COMMENCING 26-FEB-96  BAYS  0 OF  1 USED
+
+PLAN LINES   1      UNPLACED   0
