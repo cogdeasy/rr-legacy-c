@@ -23,7 +23,7 @@
 #include <string.h>
 #include "ehm.h"
 
-extern char *datfmt();
+extern char *datfmt(char *out, char *d);
 
 #define PAGLIN  60              /* LINES PER PAGE INCLUDING HEADINGS   */
 
@@ -37,8 +37,7 @@ static char abuf[16];
  *  NEWPAG  -  THROW A PAGE AND PRINT THE STANDARD HEADING BLOCK.
  */
 
-static int newpag(fp)
-FILE *fp;
+static int newpag(FILE *fp)
 {
 	char dt[16];
 
@@ -59,9 +58,7 @@ FILE *fp;
  *  CHKPAG  -  ENSURE N LINES ARE AVAILABLE, THROWING A PAGE IF NOT.
  */
 
-static int chkpag(fp, n)
-FILE *fp;
-int n;
+static int chkpag(FILE *fp, int n)
 {
 	if (linect == 0 || linect + n > PAGLIN)
 		newpag(fp);
@@ -74,8 +71,7 @@ int n;
  *             CONCERNED.
  */
 
-static int rptopn(t)
-char *t;
+static int rptopn(char *t)
 {
 	strncpy(title, t, sizeof(title) - 1);
 	title[sizeof(title) - 1] = '\0';
@@ -87,8 +83,7 @@ char *t;
  *  RPTFLT  -  FLEET STATUS SUMMARY, ONE LINE PER ENGINE.
  */
 
-int rptflt(fp)
-FILE *fp;
+int rptflt(FILE *fp)
 {
 	register int i;
 	struct engrec *e;
@@ -141,8 +136,7 @@ FILE *fp;
  *             AT THE REQUEST OF THE DUTY CONTROLLERS.
  */
 
-int rptalr(fp)
-FILE *fp;
+int rptalr(FILE *fp)
 {
 	register int i;
 	int lev;
@@ -201,8 +195,7 @@ FILE *fp;
  *  RPTPLN  -  WORKSHOP INDUCTION PLAN, IN THE ORDER BUILT BY WRKSCD.
  */
 
-int rptpln(fp)
-FILE *fp;
+int rptpln(FILE *fp)
 {
 	register int i;
 	struct plnrec *p;
@@ -261,9 +254,7 @@ FILE *fp;
  *             AS KEYED BY THE CONTROLLER.
  */
 
-int rpteng(fp, esn)
-FILE *fp;
-char *esn;
+int rpteng(FILE *fp, char *esn)
 {
 	int ix;
 	register int j;

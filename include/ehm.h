@@ -17,6 +17,8 @@
 #ifndef EHM_H
 #define EHM_H
 
+#include <stdio.h>              /* FILE, USED BY THE RPTGEN.C ENTRIES */
+
 #define VERSION "4.2C"
 #define RELDATE "09-FEB-96"
 
@@ -176,10 +178,10 @@ extern char *aretxt(char *out, int areas);
 extern char *alrtxt(int lev);
 extern int wrkscd(void);                /* WRKSCD.C, PROTOTYPED       */
 extern char *wstext(int ws);
-extern int rptflt();            /* RPTGEN.C                           */
-extern int rptalr();
-extern int rptpln();
-extern int rpteng();
+extern int rptflt(FILE *fp);            /* RPTGEN.C, PROTOTYPED       */
+extern int rptalr(FILE *fp);
+extern int rptpln(FILE *fp);
+extern int rpteng(FILE *fp, char *esn);
 extern char *strim();           /* STRUTL.C                           */
 extern char *upcase();
 extern char *fldcpy();
