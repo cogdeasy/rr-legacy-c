@@ -134,7 +134,8 @@ chkfil()
 #              $2 FLEET MASTER DECK
 #              $3 FLIGHT REPORT DECK
 #              $4 SLOT DECK
-#              $5 EXPECTED EXIT STATUS
+#              $5 SPARES DECK
+#              $6 EXPECTED EXIT STATUS
 #
 #              THE PROGRAM IS RUN IN ITS OWN WORK DIRECTORY BECAUSE THE
 #              RUN LOG IS ALWAYS EHM.LOG IN THE CURRENT DIRECTORY AND IS
@@ -152,14 +153,14 @@ runcase()
 	( cd $WRK || exit 2
 	  EHMDATA=
 	  export EHMDATA
-	  $EHMHOME/ehm -b -d $RUNDAY -f $2 -r $3 -s $4 -o ehm.lis \
+	  $EHMHOME/ehm -b -d $RUNDAY -f $2 -r $3 -s $4 -p $5 -o ehm.lis \
 		> ehm.out 2> ehm.err )
 	RC=$?
 
 	WHY=
-	if [ $RC -ne $5 ]
+	if [ $RC -ne $6 ]
 	then
-		WHY="EXIT STATUS $RC, EXPECTED $5"
+		WHY="EXIT STATUS $RC, EXPECTED $6"
 	fi
 
 	chkfil $CASE lis $WRK/ehm.lis
@@ -182,13 +183,20 @@ runcase()
 }
 
 #-----------------------------------------------------------------------
-#  DECKCASE  -  RUNCASE WITH THE THREE DECKS NAMED IN THE USUAL ORDER.
+#  DECKCASE  -  RUNCASE WITH THE FOUR DECKS NAMED IN THE USUAL ORDER.
+#               THE SPARES DECK IS THE NORMAL POOL UNLESS SPRDCK HAS
+#               BEEN SET BY THE CALLER.
 #               $1 CASE  $2 FLEET  $3 FLIGHTS  $4 SLOTS  $5 STATUS
 #-----------------------------------------------------------------------
 
 deckcase()
 {
-	runcase $1 $DECK/$2 $DECK/$3 $DECK/$4 $5
+	if [ -z "$SPRDCK" ]
+	then
+		SPRDCK=spares-normal.dat
+	fi
+	runcase $1 $DECK/$2 $DECK/$3 $DECK/$4 $DECK/$SPRDCK $5
+	SPRDCK=
 }
 
 #-----------------------------------------------------------------------
@@ -239,6 +247,7 @@ nitecase()
 	cp $DECK/$2 $WRK/data/fleet.dat || exit 2
 	cp $DECK/$3 $WRK/data/flights.dat || exit 2
 	cp $DECK/$4 $WRK/data/slots.dat || exit 2
+	cp $DECK/spares-normal.dat $WRK/data/spares.dat || exit 2
 
 	( cd $WRK || exit 2
 	  EHMHOME=$WRK
@@ -273,18 +282,27 @@ deckcase alert-oil    fleet-oil.dat     flights-oil.dat     slots-normal.dat  0
 deckcase alert-llp    fleet-llp.dat     flights-llp.dat     slots-normal.dat  0
 deckcase alert-due    fleet-due.dat     flights-due.dat     slots-normal.dat  0
 deckcase alert-multi  fleet-multi.dat   flights-multi.dat   slots-normal.dat  0
-deckcase noalert      fleet-clean.dat   flights-clean.dat   slots-normal.dat  1
+deckcase noalert      fleet-clean.dat   flights-clean.dat   slots-normal.dat  3
 deckcase slot-spare   fleet-normal.dat  flights-normal.dat  slots-surplus.dat 0
 deckcase slot-zero    fleet-normal.dat  flights-normal.dat  slots-zero.dat    0
 deckcase slot-none    fleet-normal.dat  flights-normal.dat  slots-empty.dat   0
 deckcase bound        fleet-bound.dat   flights-bound.dat   slots-surplus.dat 0
-deckcase reject       fleet-reject.dat  flights-reject.dat  slots-reject.dat  7
+deckcase reject       fleet-reject.dat  flights-reject.dat  slots-reject.dat  9
+
+#  THE SPARES POOL.  THE SHORT DECK HOLDS NOTHING ON THE SHELF SO THAT
+#  EVERY PLAN LINE IS COVERED FROM ORDER STOCK OR NOT AT ALL.
+
+SPRDCK=spares-short.dat
+deckcase spares-short fleet-normal.dat  flights-normal.dat  slots-normal.dat  0
+SPRDCK=spares-reject.dat
+deckcase spares-rej   fleet-normal.dat  flights-normal.dat  slots-normal.dat  6
 
 #  THE DATA SET NAMES BELOW ARE RELATIVE SO THAT THE MESSAGE IN THE RUN
 #  LOG DOES NOT CARRY THE NAME OF THE DIRECTORY THE TESTS WERE RUN FROM.
 
-runcase nofleet  no-such-file.dat $DECK/flights-normal.dat $DECK/slots-normal.dat 1
-runcase noslots  $DECK/fleet-normal.dat $DECK/flights-normal.dat no-such-file.dat 1
+runcase nofleet  no-such-file.dat $DECK/flights-normal.dat $DECK/slots-normal.dat $DECK/spares-normal.dat 1
+runcase noslots  $DECK/fleet-normal.dat $DECK/flights-normal.dat no-such-file.dat $DECK/spares-normal.dat 1
+runcase nospares $DECK/fleet-normal.dat $DECK/flights-normal.dat $DECK/slots-normal.dat no-such-file.dat 1
 
 #  OPERATOR ERRORS.  THE PROGRAM CANNOT BE RUN AND EXITS TWO.
 

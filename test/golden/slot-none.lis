@@ -35,3 +35,21 @@ SLOT UTILISATION
 
 
 PLAN LINES   5      UNPLACED   5
+ENGINE HEALTH MONITORING SYSTEM 4.2C  SPARES PROVISIONING                                  RUN 09-FEB-96 PAGE    4
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      TYPE   SHOP  WEEK COMM  WORKSCOPE  PARTS  SHORT  LEAD  PROVISIONING STATUS
+
+  1    1  00090004 TR700                   INSP          3      0     0  SUPPORTED
+  2    2  00090003 TR800                   HSR           4      0     0  SUPPORTED
+  3    2  00090006 RB211                   OVHL          5      0     0  SUPPORTED
+  4    3  00090002 RB211                   HSR           4      0     0  SUPPORTED
+  5    3  00090001 TR900                   HSR           4      0     0  SUPPORTED
+
+PART SHORTFALL SUMMARY
+
+     PART NO     DESCRIPTION               TYPE   SCOPE  POOL  ON HAND  ON ORDER  LEAD  DEMAND  SHORT
+
+     EVERY PART CALLED FOR BY THE PLAN IS COVERED.
+
+PLAN LINES   5      SUPPORTED   5      ON LEAD TIME   0      SHORT   0      NO PARTS LISTED   0
+PART NUMBERS STOCKED   60      PART NUMBERS SHORT    0      UNITS SHORT    0

@@ -10,14 +10,18 @@
  *      ehm -f FILE             FLEET MASTER OVERRIDE
  *      ehm -r FILE             FLIGHT REPORT FILE OVERRIDE
  *      ehm -s FILE             SLOT FILE OVERRIDE
+ *      ehm -p FILE             SPARES FILE OVERRIDE
  *      ehm -o FILE             SEND THE PRINTED OUTPUT TO FILE
  *
- *  THE BATCH SEQUENCE IS LOAD, SWEEP, SCHEDULE, PRINT ALL REPORTS.  IT
- *  IS DRIVEN FROM THE OVERNIGHT JOB EHMNITE.SH AND ITS EXIT STATUS IS
- *  THE ERROR COUNT, CAPPED AT 63 SO THAT THE SHELL CAN READ IT.
+ *  THE BATCH SEQUENCE IS LOAD, SWEEP, SCHEDULE, PROVISION, PRINT ALL
+ *  REPORTS.  IT IS DRIVEN FROM THE OVERNIGHT JOB EHMNITE.SH AND ITS
+ *  EXIT STATUS IS THE ERROR COUNT, CAPPED AT 63 SO THAT THE SHELL CAN
+ *  READ IT.
  *
  *  R.T.H.  14-MAR-1988
  *  MOD 5   09-FEB-1996  D.O'N.  RUN DATE TAKEN FROM THE SYSTEM CLOCK.
+ *  MOD 6   14-JUN-1996  D.O'N.  SPARES PROVISIONING ADDED TO THE BATCH
+ *                               SEQUENCE AND TO THE MENU AS OPTION A.
  *----------------------------------------------------------------------
  */
 
@@ -35,6 +39,7 @@ extern int isdate();
 static char fltfil[256];        /* FLEET MASTER NAME OVERRIDE          */
 static char repfil[256];        /* FLIGHT REPORT FILE NAME OVERRIDE    */
 static char sltfil[256];        /* SLOT FILE NAME OVERRIDE             */
+static char sprfil[256];        /* SPARES FILE NAME OVERRIDE           */
 static char outfil[256];        /* PRINT FILE NAME, EMPTY FOR STDOUT   */
 static char cmd[128];           /* OPERATOR COMMAND LINE               */
 static char work[132];
@@ -81,7 +86,9 @@ static int opnprt()
 }
 
 /*
- *  LOADAL  -  LOAD ALL THREE DATA SETS.
+ *  LOADAL  -  LOAD ALL FOUR DATA SETS.  A SPARES FILE THAT CANNOT BE
+ *             OPENED IS REPORTED AND THE RUN CARRIES ON WITHOUT IT, THE
+ *             THREE ORIGINAL PRODUCTS DO NOT DEPEND ON IT.
  */
 
 static int loadal()
@@ -92,6 +99,7 @@ static int loadal()
 		return (0);
 	if (ldslot(sltfil[0] ? sltfil : (char *)NULL) < 0)
 		return (0);
+	ldspar(sprfil[0] ? sprfil : (char *)NULL);
 	return (1);
 }
 
@@ -107,10 +115,12 @@ static int batch()
 		return (errcnt());
 	if (wrkscd() < 0)
 		return (errcnt());
+	spprov();
 
 	rptflt(prtfp);
 	rptalr(prtfp);
 	rptpln(prtfp);
+	rptspr(prtfp);
 	fflush(prtfp);
 	return (errcnt());
 }
@@ -135,6 +145,8 @@ static int menu()
 	printf("        7   PRINT ENGINE HISTORY\n");
 	printf("        8   RUN THE COMPLETE OVERNIGHT SEQUENCE\n");
 	printf("        9   CHANGE RUN DATE\n");
+	printf("        A   RUN SPARES PROVISIONING\n");
+	printf("        B   PRINT SPARES PROVISIONING\n");
 	printf("        X   EXIT\n");
 	printf("\n");
 	printf("SELECT OPTION - ");
@@ -221,6 +233,12 @@ static int term()
 			} else
 				errmsg("EHM-941 RUN DATE MUST BE SIX DIGITS");
 			break;
+		case 'A':
+			spprov();
+			break;
+		case 'B':
+			rptspr(prtfp);
+			break;
 		case 'X':
 		case 'Q':
 			goto done;
@@ -248,7 +266,8 @@ char *argv[];
 	int rc;
 
 	isbatc = 0;
-	fltfil[0] = repfil[0] = sltfil[0] = outfil[0] = '\0';
+	fltfil[0] = repfil[0] = sltfil[0] = '\0';
+	sprfil[0] = outfil[0] = '\0';
 	setday();
 
 	for (i = 1; i < argc; i++) {
@@ -286,6 +305,11 @@ char *argv[];
 				goto noarg;
 			strcpy(sltfil, argv[i]);
 			break;
+		case 'p':
+			if (++i >= argc)
+				goto noarg;
+			strcpy(sprfil, argv[i]);
+			break;
 		case 'o':
 			if (++i >= argc)
 				goto noarg;
@@ -293,7 +317,7 @@ char *argv[];
 			break;
 		case 'h':
 			fprintf(stderr,
-			 "USAGE - ehm [-b] [-d YYMMDD] [-f FLEET] [-r REPORTS] [-s SLOTS] [-o PRINT]\n");
+			 "USAGE - ehm [-b] [-d YYMMDD] [-f FLEET] [-r REPORTS] [-s SLOTS] [-p SPARES] [-o PRINT]\n");
 			exit(0);
 		default:
 			fprintf(stderr, "EHM-945 OPTION %s NOT KNOWN\n",

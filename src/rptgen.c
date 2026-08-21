@@ -12,10 +12,12 @@
  *      RPTFLT  FLEET STATUS SUMMARY
  *      RPTALR  ALERT REPORT, EXCEPTIONS ONLY
  *      RPTPLN  WORKSHOP INDUCTION PLAN
+ *      RPTSPR  SPARES PROVISIONING AGAINST THE INDUCTION PLAN
  *      RPTENG  SINGLE ENGINE HISTORY WITH THE FLIGHT REPORT DETAIL
  *
  *  A.M.S.  06-JUN-1988
  *  MOD 4   18-JUL-1993  A.M.S.  ALERT REASON COLUMN ADDED.
+ *  MOD 5   14-JUN-1996  D.O'N.  SPARES PROVISIONING REPORT ADDED.
  *----------------------------------------------------------------------
  */
 
@@ -256,6 +258,133 @@ FILE *fp;
 	fprintf(fp, "\n");
 	fprintf(fp, "PLAN LINES %3d      UNPLACED %3d\n", nplns, nun);
 	linect += 2;
+	return (nplns);
+}
+
+/*
+ *  PVTEXT  -  PROVISIONING STATUS WORDING FOR THE PRINTED REPORT.
+ */
+
+static char *pvtext(sts)
+int sts;
+{
+	switch (sts) {
+	case PVFULL:
+		return ("SUPPORTED");
+	case PVLEAD:
+		return ("SHORT, LEAD TIME RECOVERS");
+	case PVLATE:
+		return ("SHORT AT INDUCTION WEEK");
+	}
+	return ("NO PARTS LISTED");
+}
+
+/*
+ *  RPTSPR  -  SPARES PROVISIONING.  ONE LINE PER INDUCTION PLAN LINE
+ *             IN PLAN ORDER, FOLLOWED BY THE SHORTFALL SUMMARY OF THE
+ *             PART NUMBERS THAT THE PLAN COULD NOT COVER.
+ */
+
+int rptspr(fp)
+FILE *fp;
+{
+	register int i;
+	struct plnrec *p;
+	struct sprrec *s;
+	char *ty;
+	int ix;
+	int nfull;
+	int nlead;
+	int nlate;
+	int nnone;
+	int nshrt;
+	int nunit;
+
+	if (nplns <= 0) {
+		errmsg("EHM-932 NO INDUCTION PLAN HAS BEEN BUILT");
+		return (-1);
+	}
+	if (!provdn) {
+		errmsg("EHM-934 PROVISIONING MUST BE RUN BEFORE THIS REPORT");
+		return (-1);
+	}
+
+	rptopn("SPARES PROVISIONING");
+	chkpag(fp, 4);
+	fprintf(fp,
+"SEQ  PRI  ESN      TYPE   SHOP  WEEK COMM  WORKSCOPE  PARTS  SHORT  LEAD  PROVISIONING STATUS\n");
+	fprintf(fp, "\n");
+	linect += 2;
+
+	nfull = 0;
+	nlead = 0;
+	nlate = 0;
+	nnone = 0;
+	for (i = 0; i < nplns; i++) {
+		p = &plntab[i];
+		ix = fndeng(p->esn);
+		ty = (ix < 0) ? "      " : engtab[ix].etype;
+		chkpag(fp, 1);
+		fprintf(fp,
+"%3d  %3d  %-8s %-6s %-4s  %-9s  %-4s       %4d   %4d  %4d  %s\n",
+			i + 1, p->prio, p->esn, ty,
+			p->placed ? p->shop : "    ",
+			p->placed ? datfmt(dbuf, p->wkcom) : "         ",
+			wstext(p->wscope), p->pvreq, p->pvshr,
+			p->pvlead, pvtext(p->pvsts));
+		linect++;
+		if (p->pvreq == 0)
+			nnone++;
+		else if (p->pvsts == PVFULL)
+			nfull++;
+		else if (p->pvsts == PVLEAD)
+			nlead++;
+		else
+			nlate++;
+	}
+
+	chkpag(fp, 6);
+	fprintf(fp, "\n");
+	fprintf(fp, "PART SHORTFALL SUMMARY\n");
+	fprintf(fp, "\n");
+	fprintf(fp,
+"     PART NO     DESCRIPTION               TYPE   SCOPE  POOL  ON HAND  ON ORDER  LEAD  DEMAND  SHORT\n");
+	fprintf(fp, "\n");
+	linect += 5;
+
+	nshrt = 0;
+	nunit = 0;
+	for (i = 0; i < nsprs; i++) {
+		s = &sprtab[i];
+		if (s->shrt <= 0)
+			continue;
+		chkpag(fp, 1);
+		fprintf(fp,
+"     %-10s  %-24s  %-6s %-4s   %c     %7d  %8d  %4d  %6d  %5d\n",
+			s->pnum, s->pdesc, s->etype, wstext(s->wscope),
+			s->rotbl, s->qoh, s->qoo, s->lead,
+			s->dmand, s->shrt);
+		linect++;
+		nshrt++;
+		nunit += s->shrt;
+	}
+
+	if (nshrt == 0) {
+		chkpag(fp, 1);
+		fprintf(fp,
+		 "     EVERY PART CALLED FOR BY THE PLAN IS COVERED.\n");
+		linect++;
+	}
+
+	chkpag(fp, 4);
+	fprintf(fp, "\n");
+	fprintf(fp,
+"PLAN LINES %3d      SUPPORTED %3d      ON LEAD TIME %3d      SHORT %3d      NO PARTS LISTED %3d\n",
+		nplns, nfull, nlead, nlate, nnone);
+	fprintf(fp,
+"PART NUMBERS STOCKED %4d      PART NUMBERS SHORT %4d      UNITS SHORT %4d\n",
+		nsprs, nshrt, nunit);
+	linect += 3;
 	return (nplns);
 }
 

@@ -21,6 +21,8 @@
  *
  *  D.O'N.  12-OCT-1990
  *  MOD 2   30-NOV-1994  D.O'N.  UNPLACED ENGINES CARRIED ON THE PLAN.
+ *  MOD 3   14-JUN-1996  D.O'N.  PROVISIONING FIELDS CLEARED ON EVERY
+ *                               PLAN LINE, SEE SPRPRV.C.
  *----------------------------------------------------------------------
  */
 
@@ -81,6 +83,25 @@ int ws;
 		return ("OVHL");
 	}
 	return ("    ");
+}
+
+/*
+ *  WSCODE  -  WORKSCOPE CODE FOR A MNEMONIC AS KEYED ON A SPARES CARD.
+ *             WSNONE IS RETURNED FOR ANYTHING NOT RECOGNISED.
+ */
+
+int wscode(m)
+char *m;
+{
+	if (strcmp(m, "INSP") == 0)
+		return (WSINSP);
+	if (strcmp(m, "HSR") == 0)
+		return (WSHOTS);
+	if (strcmp(m, "PERF") == 0)
+		return (WSPERF);
+	if (strcmp(m, "OVHL") == 0)
+		return (WSFULL);
+	return (WSNONE);
 }
 
 /*
@@ -220,11 +241,16 @@ int wrkscd()
 
 	nplns = 0;
 	nplaced = 0;
+	provdn = 0;
 	for (i = 0; i < ncand; i++) {
 		e = &engtab[cand[i]];
 		p = &plntab[nplns];
 
 		strcpy(p->esn, e->esn);
+		p->pvsts = PVNONE;
+		p->pvreq = 0;
+		p->pvshr = 0;
+		p->pvlead = 0;
 		p->prio = priof(e);
 		p->wscope = wscope(e, &p->tat);
 

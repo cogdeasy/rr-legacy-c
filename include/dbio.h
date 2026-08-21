@@ -50,6 +50,17 @@
 #define SL_WKC  5               /* COL  6-11  WEEK COMMENCING YYMMDD  */
 #define SL_CAP  12              /* COL 13-14  BAYS AVAILABLE          */
 
+/*  SPARES AND ROTABLE POOL  -  SPARES.DAT                            */
+
+#define SP_PNO  0               /* COL  1-10  PART NUMBER             */
+#define SP_DSC  11              /* COL 12-35  PART DESCRIPTION        */
+#define SP_TYP  36              /* COL 37-42  ENGINE MARK FITTED TO   */
+#define SP_WSC  43              /* COL 44-47  WORKSCOPE MNEMONIC      */
+#define SP_QOH  48              /* COL 49-52  QUANTITY ON HAND        */
+#define SP_QOO  53              /* COL 54-57  QUANTITY ON ORDER       */
+#define SP_LED  58              /* COL 59-61  LEAD TIME, DAYS         */
+#define SP_ROT  62              /* COL 63      R ROTABLE C CONSUMABLE */
+
 /*  DEFAULT DATA SET NAMES.  OVERRIDDEN BY THE EHMDATA ENVIRONMENT
  *  VARIABLE ON UNIX, OR BY THE EHM$DATA LOGICAL NAME ON VMS.
  */
@@ -57,6 +68,7 @@
 #define DSFLET  "fleet.dat"
 #define DSFLTS  "flights.dat"
 #define DSSLTS  "slots.dat"
+#define DSSPRS  "spares.dat"
 #define DSLOG   "ehm.log"
 
 #endif
