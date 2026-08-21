@@ -27,8 +27,8 @@
 #include <string.h>
 #include "ehm.h"
 
-extern int daydif();
-extern int isdate();
+extern int daydif(char *a, char *b);
+extern int isdate(char *d);
 
 static char work[132];
 
@@ -37,8 +37,7 @@ static char work[132];
  *             TO BE CALLED FROM OUTSIDE THIS MODULE.
  */
 
-static int clcone(e)
-struct engrec *e;
+static int clcone(struct engrec *e)
 {
 	register int ix;
 	struct fltrec *f;
@@ -194,7 +193,7 @@ struct engrec *e;
  *              CARRYING AN ALERT OF WATCH LEVEL OR ABOVE.
  */
 
-int ehmcalc()
+int ehmcalc(void)
 {
 	register int i;
 	int nalert;
@@ -222,9 +221,7 @@ int ehmcalc()
  *             ORDER IS EGT MARGIN, RATE, VIBRATION, OIL, LIFE, DUE.
  */
 
-char *aretxt(out, areas)
-char *out;
-int areas;
+char *aretxt(char *out, int areas)
 {
 	out[0] = (areas & AREGTM) ? 'M' : '.';
 	out[1] = (areas & ARERAT) ? 'R' : '.';
@@ -240,8 +237,7 @@ int areas;
  *  ALRTXT  -  ALERT LEVEL AS A FOUR CHARACTER MNEMONIC.
  */
 
-char *alrtxt(lev)
-int lev;
+char *alrtxt(int lev)
 {
 	switch (lev) {
 	case ALNONE:
