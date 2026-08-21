@@ -23,8 +23,6 @@
 #include <string.h>
 #include "ehm.h"
 
-extern char *datfmt(char *out, char *d);
-
 #define PAGLIN  60              /* LINES PER PAGE INCLUDING HEADINGS   */
 
 static int pageno = 0;          /* PAGE NUMBER WITHIN THE CURRENT RUN  */

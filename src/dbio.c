@@ -34,10 +34,6 @@ int nplns = 0;
 int calcdn = 0;
 char runday[DATSIZ+1] = "960209";
 
-extern int fldint(char *card, int off, int n);
-extern long fldlng(char *card, int off, int n);
-extern int isdate(char *d);
-
 static char card[CARD];         /* CARD IMAGE WORK AREA                */
 static char work[132];          /* MESSAGE WORK AREA                   */
 static char path[256];          /* DATA SET NAME WORK AREA             */

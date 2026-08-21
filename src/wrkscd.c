@@ -28,9 +28,6 @@
 #include <string.h>
 #include "ehm.h"
 
-extern int daydif(char *a, char *b);
-extern int isdate(char *d);
-
 static char work[132];
 
 /*
