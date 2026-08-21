@@ -43,15 +43,18 @@ static FILE *prtfp = NULL;      /* PRINT STREAM                        */
  *             STRUTL.C ABOUT THE CENTURY.
  */
 
-static int setday()
+static int setday(void)
 {
-	long clk;
+	time_t clk;
 	struct tm *t;
+	char buf[40];
 
-	clk = (long)time((time_t *)0);
-	t = localtime((time_t *)&clk);
-	sprintf(runday, "%02d%02d%02d",
+	clk = time((time_t *)0);
+	t = localtime(&clk);
+	sprintf(buf, "%02d%02d%02d",
 		t->tm_year % 100, t->tm_mon + 1, t->tm_mday);
+	memcpy(runday, buf, DATSIZ);
+	runday[DATSIZ] = '\0';
 	return (0);
 }
 
@@ -60,7 +63,7 @@ static int setday()
  *             TERMINAL, THE RUN IS NOT ABANDONED.
  */
 
-static int opnprt()
+static int opnprt(void)
 {
 	if (outfil[0] == '\0') {
 		prtfp = stdout;
@@ -68,7 +71,7 @@ static int opnprt()
 	}
 	prtfp = fopen(outfil, "w");
 	if (prtfp == NULL) {
-		sprintf(work, "EHM-940 CANNOT OPEN PRINT FILE %s", outfil);
+		sprintf(work, "EHM-940 CANNOT OPEN PRINT FILE %.100s", outfil);
 		errmsg(work);
 		prtfp = stdout;
 		return (0);
@@ -80,7 +83,7 @@ static int opnprt()
  *  LOADAL  -  LOAD ALL THREE DATA SETS.
  */
 
-static int loadal()
+static int loadal(void)
 {
 	if (ldfleet(fltfil[0] ? fltfil : (char *)NULL) < 0)
 		return (0);
@@ -95,7 +98,7 @@ static int loadal()
  *  BATCH  -  THE OVERNIGHT SEQUENCE.
  */
 
-static int batch()
+static int batch(void)
 {
 	if (!loadal())
 		return (errcnt());
@@ -115,7 +118,7 @@ static int batch()
  *  MENU  -  PRINT THE OPERATOR MENU.
  */
 
-static int menu()
+static int menu(void)
 {
 	printf("\n");
 	printf("        ENGINE HEALTH MONITORING SYSTEM  RELEASE %s\n",
@@ -142,7 +145,7 @@ static int menu()
  *  GETCMD  -  READ ONE OPERATOR REPLY.  RETURNS 0 AT END OF INPUT.
  */
 
-static int getcmd()
+static int getcmd(void)
 {
 	register char *p;
 
@@ -161,7 +164,7 @@ static int getcmd()
  *  TERM  -  THE TERMINAL DIALOGUE.
  */
 
-static int term()
+static int term(void)
 {
 	char esn[32];
 
@@ -231,13 +234,27 @@ done:
 }
 
 /*
+ *  SETFIL  -  TAKE A FILE NAME OVERRIDE FROM THE COMMAND LINE.  A NAME
+ *             THAT WILL NOT FIT IS REJECTED RATHER THAN TRUNCATED, THE
+ *             OPERATOR WOULD OTHERWISE BE GIVEN THE WRONG DATA SET.
+ */
+
+static int setfil(char *dst, int siz, char *val)
+{
+	if ((int)strlen(val) >= siz) {
+		fprintf(stderr, "EHM-947 FILE NAME TOO LONG - %.80s\n", val);
+		exit(2);
+	}
+	strcpy(dst, val);
+	return (0);
+}
+
+/*
  *  MAIN  -  ARGUMENT DECODE AND DISPATCH.  THE ARGUMENT SCAN IS DONE BY
  *           HAND, GETOPT IS NOT PRESENT ON ALL OF THE TARGET SYSTEMS.
  */
 
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
 	register int i;
 	int isbatc;
@@ -270,22 +287,22 @@ char *argv[];
 		case 'f':
 			if (++i >= argc)
 				goto noarg;
-			strcpy(fltfil, argv[i]);
+			setfil(fltfil, (int)sizeof(fltfil), argv[i]);
 			break;
 		case 'r':
 			if (++i >= argc)
 				goto noarg;
-			strcpy(repfil, argv[i]);
+			setfil(repfil, (int)sizeof(repfil), argv[i]);
 			break;
 		case 's':
 			if (++i >= argc)
 				goto noarg;
-			strcpy(sltfil, argv[i]);
+			setfil(sltfil, (int)sizeof(sltfil), argv[i]);
 			break;
 		case 'o':
 			if (++i >= argc)
 				goto noarg;
-			strcpy(outfil, argv[i]);
+			setfil(outfil, (int)sizeof(outfil), argv[i]);
 			break;
 		case 'h':
 			fprintf(stderr,

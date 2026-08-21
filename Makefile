@@ -8,15 +8,17 @@
 #       lint        RUN LINT OVER THE SOURCES, IF IT IS INSTALLED
 #       clean       REMOVE THE OBJECT FILES AND THE PROGRAM
 #
-#  THE SOURCES ARE K AND R C.  A COMPILER THAT INSISTS ON PROTOTYPES
-#  WILL NEED THE DIALECT SETTING IN CFLAGS BELOW.
+#  THE SOURCES ARE NOW PROTOTYPED C AND ARE BUILT TO THE 1999 STANDARD.
+#  OVERRIDE CFLAGS FOR A SITE WHOSE COMPILER PREDATES IT, FOR EXAMPLE
+#  MAKE CFLAGS="-O -I include -std=c89 -pedantic".
 #
 #  R.T.H.  14-MAR-1988
+#  MOD 6                D.O'N.  PORTED OFF K AND R C, C99 BY DEFAULT.
 #-----------------------------------------------------------------------
 #
 
 CC      = cc
-CFLAGS  = -O -I include
+CFLAGS  = -O -I include -std=c99 -Wall -Wextra
 LDFLAGS =
 LIBS    =
 PROG    = ehm
