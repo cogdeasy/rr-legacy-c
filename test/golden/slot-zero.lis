@@ -1,0 +1,57 @@
+ENGINE HEALTH MONITORING SYSTEM 4.2C  FLEET STATUS SUMMARY                                 RUN 09-FEB-96 PAGE    1
+-----------------------------------------------------------------------------------------------------------------
+ESN      TYPE   REG     OPR  HRS SN  CYC SN BSTD ST  REPS   EGTM   RATE   VIB  CYC REM  SV DUE     ALERT REASON
+
+00090001 TR900  G-TSTA  BAW    41200    9800    2  S     4     43     50    20     5600  01-JUN-97  WTCH .R....
+00090002 RB211  G-TSTB  BAW    52100   12400    1  W     3     24     64    22     1406  01-APR-96  WTCH MR...D
+00090003 TR800  G-TSTC  AFR    68300   15100    3  R     3     40      0    52   999999  01-MAR-96  ACT  ..V..D
+00090004 TR700  G-TSTD  QFA    77400   19900    4  U     3     41      0    18   999999  15-FEB-96  AOG  .....D
+00090005 TR900  G-TSTE  SIA    33500    7200    2  S     3     47      0    15   999999  01-JAN-98       ......
+00090006 RB211  G-TSTF  DLH    88600   20400    1  S     3     39      0    21   999999  01-DEC-97  ACT  ....L.
+
+TOTAL ENGINES    6      ACT OR ABOVE    3      ON WATCH    2      FLIGHT REPORTS    19
+ENGINE HEALTH MONITORING SYSTEM 4.2C  ENGINE ALERT REPORT                                  RUN 09-FEB-96 PAGE    2
+-----------------------------------------------------------------------------------------------------------------
+LVL  ESN      TYPE   REG     OPR   EGTM   RATE    VIB   CYC REM  SV DUE     REASON  RECOMMENDED ACTION
+
+AOG  00090004 TR700  G-TSTD  QFA      41      0     18    999999  15-FEB-96  .....D  REMOVE AT NEXT OPPORTUNITY
+ACT  00090003 TR800  G-TSTC  AFR      40      0     52    999999  01-MAR-96  ..V..D  REMOVE AT NEXT OPPORTUNITY
+ACT  00090006 RB211  G-TSTF  DLH      39      0     21    999999  01-DEC-97  ....L.  REMOVE AT NEXT OPPORTUNITY
+WTCH 00090001 TR900  G-TSTA  BAW      43     50     20      5600  01-JUN-97  .R....  MONITOR, REVIEW NEXT SWEEP
+WTCH 00090002 RB211  G-TSTB  BAW      24     64     22      1406  01-APR-96  MR...D  MONITOR, REVIEW NEXT SWEEP
+
+REASON CODES   M EGT MARGIN LOW   R DETERIORATION RATE   V VIBRATION   O OIL SYSTEM   L LIFE LIMIT   D SHOP VISIT DUE
+ENGINE HEALTH MONITORING SYSTEM 4.2C  WORKSHOP INDUCTION PLAN                              RUN 09-FEB-96 PAGE    3
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      SHOP  WEEK COMM  WORKSCOPE  TAT  STATUS
+
+  1    1  00090004                  INSP       21  NO SLOT AVAILABLE
+  2    2  00090003                  HSR        45  NO SLOT AVAILABLE
+  3    2  00090006                  OVHL       90  NO SLOT AVAILABLE
+  4    3  00090002                  HSR        45  NO SLOT AVAILABLE
+  5    3  00090001                  HSR        45  NO SLOT AVAILABLE
+
+SLOT UTILISATION
+
+     SHOP DBY1 WEEK COMMENCING 12-FEB-96  BAYS  0 OF  0 USED
+     SHOP DBY2 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  0 USED
+
+PLAN LINES   5      UNPLACED   5
+ENGINE HEALTH MONITORING SYSTEM 4.2C  SPARES PROVISIONING                                  RUN 09-FEB-96 PAGE    4
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      TYPE   SHOP  WEEK COMM  WORKSCOPE  PARTS  SHORT  LEAD  PROVISIONING STATUS
+
+  1    1  00090004 TR700                   INSP          3      0     0  SUPPORTED
+  2    2  00090003 TR800                   HSR           4      0     0  SUPPORTED
+  3    2  00090006 RB211                   OVHL          5      0     0  SUPPORTED
+  4    3  00090002 RB211                   HSR           4      0     0  SUPPORTED
+  5    3  00090001 TR900                   HSR           4      0     0  SUPPORTED
+
+PART SHORTFALL SUMMARY
+
+     PART NO     DESCRIPTION               TYPE   SCOPE  POOL  ON HAND  ON ORDER  LEAD  DEMAND  SHORT
+
+     EVERY PART CALLED FOR BY THE PLAN IS COVERED.
+
+PLAN LINES   5      SUPPORTED   5      ON LEAD TIME   0      SHORT   0      NO PARTS LISTED   0
+PART NUMBERS STOCKED   60      PART NUMBERS SHORT    0      UNITS SHORT    0

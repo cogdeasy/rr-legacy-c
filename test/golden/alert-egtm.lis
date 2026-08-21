@@ -1,0 +1,43 @@
+ENGINE HEALTH MONITORING SYSTEM 4.2C  FLEET STATUS SUMMARY                                 RUN 09-FEB-96 PAGE    1
+-----------------------------------------------------------------------------------------------------------------
+ESN      TYPE   REG     OPR  HRS SN  CYC SN BSTD ST  REPS   EGTM   RATE   VIB  CYC REM  SV DUE     ALERT REASON
+
+00092001 TR900  G-RSNM  BAW    30000    7000    1  S     3     22      0    20   999999  01-JUN-97  WTCH M.....
+
+TOTAL ENGINES    1      ACT OR ABOVE    0      ON WATCH    1      FLIGHT REPORTS     3
+ENGINE HEALTH MONITORING SYSTEM 4.2C  ENGINE ALERT REPORT                                  RUN 09-FEB-96 PAGE    2
+-----------------------------------------------------------------------------------------------------------------
+LVL  ESN      TYPE   REG     OPR   EGTM   RATE    VIB   CYC REM  SV DUE     REASON  RECOMMENDED ACTION
+
+WTCH 00092001 TR900  G-RSNM  BAW      22      0     20    999999  01-JUN-97  M.....  MONITOR, REVIEW NEXT SWEEP
+
+REASON CODES   M EGT MARGIN LOW   R DETERIORATION RATE   V VIBRATION   O OIL SYSTEM   L LIFE LIMIT   D SHOP VISIT DUE
+ENGINE HEALTH MONITORING SYSTEM 4.2C  WORKSHOP INDUCTION PLAN                              RUN 09-FEB-96 PAGE    3
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      SHOP  WEEK COMM  WORKSCOPE  TAT  STATUS
+
+  1    3  00092001 DBY1  12-FEB-96  INSP       21  PLANNED
+
+SLOT UTILISATION
+
+     SHOP DBY1 WEEK COMMENCING 12-FEB-96  BAYS  1 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 12-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY1 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP DBY2 WEEK COMMENCING 19-FEB-96  BAYS  0 OF  1 USED
+     SHOP SIN1 WEEK COMMENCING 26-FEB-96  BAYS  0 OF  1 USED
+
+PLAN LINES   1      UNPLACED   0
+ENGINE HEALTH MONITORING SYSTEM 4.2C  SPARES PROVISIONING                                  RUN 09-FEB-96 PAGE    4
+-----------------------------------------------------------------------------------------------------------------
+SEQ  PRI  ESN      TYPE   SHOP  WEEK COMM  WORKSCOPE  PARTS  SHORT  LEAD  PROVISIONING STATUS
+
+  1    3  00092001 TR900  DBY1  12-FEB-96  INSP          3      0     0  SUPPORTED
+
+PART SHORTFALL SUMMARY
+
+     PART NO     DESCRIPTION               TYPE   SCOPE  POOL  ON HAND  ON ORDER  LEAD  DEMAND  SHORT
+
+     EVERY PART CALLED FOR BY THE PLAN IS COVERED.
+
+PLAN LINES   1      SUPPORTED   1      ON LEAD TIME   0      SHORT   0      NO PARTS LISTED   0
+PART NUMBERS STOCKED   60      PART NUMBERS SHORT    0      UNITS SHORT    0

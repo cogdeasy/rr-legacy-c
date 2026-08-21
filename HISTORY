@@ -55,10 +55,18 @@ REL   DATE         BY      DESCRIPTION
                            NO -D SWITCH IS GIVEN.  SLOT UTILISATION
                            BLOCK ADDED TO THE FOOT OF THE PLAN.
 
+4.2C  20-AUG-2026  DEVIN.  GOLDEN LISTING REGRESSION HARNESS ADDED,
+                           RUNTEST.SH WITH THE CARD DECKS IN TEST/DECK
+                           AND THE EXPECTED LISTINGS IN TEST/GOLDEN.
+                           NO CHANGE TO THE PROGRAM ITSELF.
+
 4.3C  14-JUN-1996  D.O'N.  SPARES PROVISIONING AND ROTABLE POOL ADDED
                            TO THE AGREEMENT WITH THE STORES OFFICE OF
                            THAT DATE.  A FOURTH DATA SET, SPARES.DAT,
                            IS LOADED AND THE INDUCTION PLAN IS PRICED
                            FOR PART COVER IN PLAN ORDER.  NEW SPARES
                            PROVISIONING REPORT AND MENU OPTIONS A AND
-                           B.  THE EXISTING REPORTS ARE UNCHANGED.
+                           B.  THE EXISTING REPORTS ARE UNCHANGED,
+                           BUT THE GOLDEN LISTINGS AND RUN LOGS CARRY
+                           THE NEW PRODUCT AND ITS MESSAGES AND HAVE
+                           BEEN REGENERATED.
