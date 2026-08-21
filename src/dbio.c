@@ -128,7 +128,7 @@ int ldfleet(char *fname)
 	nbad = 0;
 	fp = fopen(dsname(fname == NULL ? DSFLET : fname), "r");
 	if (fp == NULL) {
-		sprintf(work, "EHM-910 CANNOT OPEN FLEET MASTER %s", path);
+		sprintf(work, "EHM-910 CANNOT OPEN FLEET MASTER %.98s", path);
 		errmsg(work);
 		return (-1);
 	}
@@ -219,7 +219,7 @@ int ldflts(char *fname)
 	}
 	fp = fopen(dsname(fname == NULL ? DSFLTS : fname), "r");
 	if (fp == NULL) {
-		sprintf(work, "EHM-915 CANNOT OPEN FLIGHT REPORT FILE %s",
+		sprintf(work, "EHM-915 CANNOT OPEN FLIGHT REPORT FILE %.92s",
 			path);
 		errmsg(work);
 		return (-1);
@@ -294,7 +294,7 @@ int ldslot(char *fname)
 	nslts = 0;
 	fp = fopen(dsname(fname == NULL ? DSSLTS : fname), "r");
 	if (fp == NULL) {
-		sprintf(work, "EHM-918 CANNOT OPEN SLOT FILE %s", path);
+		sprintf(work, "EHM-918 CANNOT OPEN SLOT FILE %.101s", path);
 		errmsg(work);
 		return (-1);
 	}
