@@ -1,0 +1,16 @@
+ENGINE HEALTH MONITORING SYSTEM 4.2C  FLEET STATUS SUMMARY                                 RUN 09-FEB-96 PAGE    1
+-----------------------------------------------------------------------------------------------------------------
+ESN      TYPE   REG     OPR  HRS SN  CYC SN BSTD ST  REPS   EGTM   RATE   VIB  CYC REM  SV DUE     ALERT REASON
+
+00093001 TR900  G-CLNA  BAW    30000    7000    1  S     3     45      0    20   999999  01-JAN-98       ......
+00093002 TR900  G-CLNB  BAW    21000    5000    1  S     3     45      0    20   999999  01-NOV-98       ......
+00093003 TR900  G-CLNC  BAW    44000    9000    1  S     3     45      0    20   999999  01-MAR-99       ......
+
+TOTAL ENGINES    3      ACT OR ABOVE    0      ON WATCH    0      FLIGHT REPORTS     9
+ENGINE HEALTH MONITORING SYSTEM 4.2C  ENGINE ALERT REPORT                                  RUN 09-FEB-96 PAGE    2
+-----------------------------------------------------------------------------------------------------------------
+LVL  ESN      TYPE   REG     OPR   EGTM   RATE    VIB   CYC REM  SV DUE     REASON  RECOMMENDED ACTION
+
+     NO ENGINES ARE CARRYING AN ALERT.
+
+REASON CODES   M EGT MARGIN LOW   R DETERIORATION RATE   V VIBRATION   O OIL SYSTEM   L LIFE LIMIT   D SHOP VISIT DUE
