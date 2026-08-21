@@ -24,7 +24,6 @@
 #include "ehm.h"
 
 extern char *datfmt();
-extern char *wstext();          /* ARETXT AND ALRTXT ARE IN EHM.H     */
 
 #define PAGLIN  60              /* LINES PER PAGE INCLUDING HEADINGS   */
 

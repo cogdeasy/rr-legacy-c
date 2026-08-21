@@ -174,7 +174,8 @@ extern int fndeng(char *esn);
 extern int ehmcalc(void);               /* EHMCALC.C, PROTOTYPED      */
 extern char *aretxt(char *out, int areas);
 extern char *alrtxt(int lev);
-extern int wrkscd();            /* WRKSCD.C                           */
+extern int wrkscd(void);                /* WRKSCD.C, PROTOTYPED       */
+extern char *wstext(int ws);
 extern int rptflt();            /* RPTGEN.C                           */
 extern int rptalr();
 extern int rptpln();
