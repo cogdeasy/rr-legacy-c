@@ -28,8 +28,8 @@
 #include <string.h>
 #include "ehm.h"
 
-extern int daydif();
-extern int isdate();
+extern int daydif(char *a, char *b);
+extern int isdate(char *d);
 
 static char work[132];
 
@@ -39,9 +39,7 @@ static char work[132];
  *             THROUGH TATP.
  */
 
-static int wscope(e, tatp)
-struct engrec *e;
-int *tatp;
+static int wscope(struct engrec *e, int *tatp)
 {
 	if (e->areas & ARLLP) {
 		*tatp = 90;
@@ -67,8 +65,7 @@ int *tatp;
  *  WSTEXT  -  WORKSCOPE MNEMONIC FOR THE PRINTED PLAN.
  */
 
-char *wstext(ws)
-int ws;
+char *wstext(int ws)
 {
 	switch (ws) {
 	case WSINSP:
@@ -88,8 +85,7 @@ int ws;
  *            RETURNED FOR AN ENGINE THAT DOES NOT NEED A SLOT AT ALL.
  */
 
-static int priof(e)
-struct engrec *e;
+static int priof(struct engrec *e)
 {
 	if (e->alert == ALAOG)
 		return (1);
@@ -106,8 +102,7 @@ struct engrec *e;
  *             OTHERWISE THE DAYS TO THE SHOP VISIT DUE DATE.
  */
 
-static long rankof(e)
-struct engrec *e;
+static long rankof(struct engrec *e)
 {
 	long r;
 
@@ -130,7 +125,7 @@ struct engrec *e;
  *             BEFORE THE RUN DATE.  RETURNS THE SLOT INDEX OR -1.
  */
 
-static int fndslt()
+static int fndslt(void)
 {
 	register int i;
 	int best;
@@ -153,7 +148,7 @@ static int fndslt()
  *             LINES, OR -1 IF THE TREND SWEEP HAS NOT BEEN RUN.
  */
 
-int wrkscd()
+int wrkscd(void)
 {
 	int cand[MAXPLN];       /* CANDIDATE ENGINE INDICES              */
 	int ncand;
