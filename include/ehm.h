@@ -163,12 +163,14 @@ extern int nplns;               /* PLAN LINES BUILT                   */
 extern int calcdn;              /* NON ZERO ONCE EHMCALC HAS RUN      */
 extern char runday[DATSIZ+1];   /* RUN DATE, YYMMDD, SET BY MAIN      */
 
-/* ------ ENTRY POINTS.  NO PROTOTYPES - K AND R COMPILERS ONLY. ---- */
+/* ------ ENTRY POINTS.  MODULES CARRYING PROTOTYPES ARE MARKED, THE
+ *        REMAINDER ARE STILL DECLARED IN THE K AND R FORM.
+ */
 
-extern int ldfleet();           /* DBIO.C                             */
-extern int ldflts();
-extern int ldslot();
-extern int fndeng();
+extern int ldfleet(char *fname);        /* DBIO.C, PROTOTYPED         */
+extern int ldflts(char *fname);
+extern int ldslot(char *fname);
+extern int fndeng(char *esn);
 extern int ehmcalc();           /* EHMCALC.C                          */
 extern int wrkscd();            /* WRKSCD.C                           */
 extern int rptflt();            /* RPTGEN.C                           */

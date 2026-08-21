@@ -34,9 +34,9 @@ int nplns = 0;
 int calcdn = 0;
 char runday[DATSIZ+1] = "960209";
 
-extern int fldint();
-extern long fldlng();
-extern int isdate();
+extern int fldint(char *card, int off, int n);
+extern long fldlng(char *card, int off, int n);
+extern int isdate(char *d);
 
 static char card[CARD];         /* CARD IMAGE WORK AREA                */
 static char work[132];          /* MESSAGE WORK AREA                   */
@@ -48,8 +48,7 @@ static char path[256];          /* DATA SET NAME WORK AREA             */
  *             DATA SETS, OTHERWISE THE CURRENT DIRECTORY IS USED.
  */
 
-static char *dsname(fname)
-char *fname;
+static char *dsname(char *fname)
 {
 	char *dir;
 
@@ -73,8 +72,7 @@ char *fname;
  *             RETURNS 0 AT END OF FILE, 1 OTHERWISE.
  */
 
-static int getcrd(fp)
-FILE *fp;
+static int getcrd(FILE *fp)
 {
 	register char *p;
 
@@ -105,8 +103,7 @@ again:
  *             SEARCH IS USED, THE TABLE IS SMALL AND UNSORTED.
  */
 
-int fndeng(esn)
-char *esn;
+int fndeng(char *esn)
 {
 	register int i;
 
@@ -121,8 +118,7 @@ char *esn;
  *              LOADED OR -1 IF THE DATA SET COULD NOT BE OPENED.
  */
 
-int ldfleet(fname)
-char *fname;
+int ldfleet(char *fname)
 {
 	FILE *fp;
 	struct engrec *e;
@@ -207,8 +203,7 @@ char *fname;
  *             REPORTED AND DROPPED.
  */
 
-int ldflts(fname)
-char *fname;
+int ldflts(char *fname)
 {
 	FILE *fp;
 	struct fltrec *f;
@@ -291,8 +286,7 @@ char *fname;
  *  LDSLOT  -  LOAD THE WORKSHOP INDUCTION SLOTS.
  */
 
-int ldslot(fname)
-char *fname;
+int ldslot(char *fname)
 {
 	FILE *fp;
 	struct sltrec *s;
