@@ -171,7 +171,9 @@ extern int ldfleet(char *fname);        /* DBIO.C, PROTOTYPED         */
 extern int ldflts(char *fname);
 extern int ldslot(char *fname);
 extern int fndeng(char *esn);
-extern int ehmcalc();           /* EHMCALC.C                          */
+extern int ehmcalc(void);               /* EHMCALC.C, PROTOTYPED      */
+extern char *aretxt(char *out, int areas);
+extern char *alrtxt(int lev);
 extern int wrkscd();            /* WRKSCD.C                           */
 extern int rptflt();            /* RPTGEN.C                           */
 extern int rptalr();
