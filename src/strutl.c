@@ -27,8 +27,7 @@ static int mdays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
  *  STRIM  -  STRIP TRAILING BLANKS FROM S IN PLACE AND RETURN S.
  */
 
-char *strim(s)
-char *s;
+char *strim(char *s)
 {
 	register char *p;
 
@@ -48,8 +47,7 @@ char *s;
  *  UPCASE  -  FOLD S TO UPPER CASE IN PLACE AND RETURN S.
  */
 
-char *upcase(s)
-char *s;
+char *upcase(char *s)
 {
 	register char *p;
 
@@ -65,11 +63,7 @@ char *s;
  *             THE CARD IS SHORT THE MISSING COLUMNS ARE TAKEN AS BLANK.
  */
 
-char *fldcpy(dst, card, off, n)
-char *dst;
-char *card;
-int off;
-int n;
+char *fldcpy(char *dst, char *card, int off, int n)
 {
 	register int i;
 	int len;
@@ -90,10 +84,7 @@ int n;
  *             FIELD RETURNS ZERO.  A LEADING MINUS IS HONOURED.
  */
 
-int fldint(card, off, n)
-char *card;
-int off;
-int n;
+int fldint(char *card, int off, int n)
 {
 	char buf[32];
 	register char *p;
@@ -123,10 +114,7 @@ int n;
  *  FLDLNG  -  AS FLDINT BUT FOR LONG QUANTITIES SUCH AS CYCLES.
  */
 
-long fldlng(card, off, n)
-char *card;
-int off;
-int n;
+long fldlng(char *card, int off, int n)
 {
 	char buf[32];
 	register char *p;
@@ -156,8 +144,7 @@ int n;
  *  ISDATE  -  RETURN NON ZERO IF D IS SIX DIGITS AND LOOKS LIKE YYMMDD.
  */
 
-int isdate(d)
-char *d;
+int isdate(char *d)
 {
 	register int i;
 	int mm;
@@ -182,8 +169,7 @@ char *d;
  *             01-JAN-1900.  RETURNS -1L IF THE DATE IS NOT VALID.
  */
 
-long dtoday(d)
-char *d;
+long dtoday(char *d)
 {
 	int yy;
 	int mm;
@@ -219,9 +205,7 @@ char *d;
  *             IS EXPECTED TO HAVE CHECKED WITH ISDATE FIRST.
  */
 
-int daydif(a, b)
-char *a;
-char *b;
+int daydif(char *a, char *b)
 {
 	long da;
 	long db;
@@ -238,9 +222,7 @@ char *b;
  *             RESULT IS PLACED IN OUT WHICH MUST HOLD TEN CHARACTERS.
  */
 
-char *datfmt(out, d)
-char *out;
-char *d;
+char *datfmt(char *out, char *d)
 {
 	static char mon[12][4] = {
 		"JAN","FEB","MAR","APR","MAY","JUN",
@@ -264,10 +246,7 @@ char *d;
  *             FOR THE SMALL NUMBERS OF DAYS INVOLVED.
  */
 
-char *addday(out, d, n)
-char *out;
-char *d;
-int n;
+char *addday(char *out, char *d, int n)
 {
 	int yy;
 	int mm;

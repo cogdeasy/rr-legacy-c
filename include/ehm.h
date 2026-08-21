@@ -165,8 +165,8 @@ extern int nplns;               /* PLAN LINES BUILT                   */
 extern int calcdn;              /* NON ZERO ONCE EHMCALC HAS RUN      */
 extern char runday[DATSIZ+1];   /* RUN DATE, YYMMDD, SET BY MAIN      */
 
-/* ------ ENTRY POINTS.  MODULES CARRYING PROTOTYPES ARE MARKED, THE
- *        REMAINDER ARE STILL DECLARED IN THE K AND R FORM.
+/* ------ ENTRY POINTS.  EVERY MODULE EXCEPT EHMMAIN.C, WHICH EXPORTS
+ *        NOTHING, IS NOW DECLARED IN PROTOTYPE FORM.
  */
 
 extern int ldfleet(char *fname);        /* DBIO.C, PROTOTYPED         */
@@ -182,13 +182,20 @@ extern int rptflt(FILE *fp);            /* RPTGEN.C, PROTOTYPED       */
 extern int rptalr(FILE *fp);
 extern int rptpln(FILE *fp);
 extern int rpteng(FILE *fp, char *esn);
-extern char *strim();           /* STRUTL.C                           */
-extern char *upcase();
-extern char *fldcpy();
-extern long dtoday();
-extern int daydif();
-extern int loginit();           /* ERRLOG.C                           */
-extern int logmsg();
-extern int errmsg();
+extern char *strim(char *s);            /* STRUTL.C, PROTOTYPED       */
+extern char *upcase(char *s);
+extern char *fldcpy(char *dst, char *card, int off, int n);
+extern int fldint(char *card, int off, int n);
+extern long fldlng(char *card, int off, int n);
+extern int isdate(char *d);
+extern long dtoday(char *d);
+extern int daydif(char *a, char *b);
+extern char *datfmt(char *out, char *d);
+extern char *addday(char *out, char *d, int n);
+extern int loginit(char *fname, int isbatc);    /* ERRLOG.C, PROTOTYPED */
+extern int logmsg(char *txt);
+extern int errmsg(char *txt);
+extern int logend(void);
+extern int errcnt(void);
 
 #endif

@@ -26,9 +26,7 @@ static long nerr = 0L;          /* OF WHICH ERRORS                     */
  *              FATAL, THE RUN CARRIES ON WITH TERMINAL OUTPUT ONLY.
  */
 
-int loginit(fname, isbatc)
-char *fname;
-int isbatc;
+int loginit(char *fname, int isbatc)
 {
 	char *nm;
 
@@ -51,8 +49,7 @@ int isbatc;
  *             THE COMPILERS THIS SYSTEM IS BUILT WITH.
  */
 
-int logmsg(txt)
-char *txt;
+int logmsg(char *txt)
 {
 	nmsg++;
 	if (logfp != NULL) {
@@ -69,8 +66,7 @@ char *txt;
  *             AS THE LOG SO THAT THE BATCH JOB LISTING SHOWS IT.
  */
 
-int errmsg(txt)
-char *txt;
+int errmsg(char *txt)
 {
 	nmsg++;
 	nerr++;
@@ -86,7 +82,7 @@ char *txt;
  *  LOGEND  -  CLOSE THE RUN LOG AND REPORT THE ERROR COUNT.
  */
 
-int logend()
+int logend(void)
 {
 	char buf[132];
 
@@ -106,7 +102,7 @@ int logend()
  *  ERRCNT  -  ERRORS SO FAR.  USED TO SET THE EXIT STATUS.
  */
 
-int errcnt()
+int errcnt(void)
 {
 	return ((int)nerr);
 }

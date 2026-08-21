@@ -28,10 +28,6 @@
 #include "ehm.h"
 #include "dbio.h"
 
-extern int errcnt();
-extern int logend();
-extern int isdate();
-
 static char fltfil[256];        /* FLEET MASTER NAME OVERRIDE          */
 static char repfil[256];        /* FLIGHT REPORT FILE NAME OVERRIDE    */
 static char sltfil[256];        /* SLOT FILE NAME OVERRIDE             */
